@@ -61,7 +61,7 @@ public class ShowRealEstate  extends Activity {
 				float distanceX, float distanceY) {
         	
         	RelativeLayout r = (RelativeLayout)findViewById(R.id.RelativeLayout1);
-        	if(e1.getY() > e2.getY()){
+        	if(e1.getY() < e2.getY()){
         		scroll -= 20;
         		//System.out.println("scroll up");
         		if(scroll <= 0){
@@ -99,16 +99,19 @@ public class ShowRealEstate  extends Activity {
                 if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                 	System.out.println("right to left");                	
                 	Intent intent = new Intent(getApplicationContext(),ShowRealEstate.class);
-                    startActivity(intent);
-                    overridePendingTransition  (R.anim.right_slide_out, R.anim.right_slide_in);
+                    startActivity(intent);                   
+                    overridePendingTransition  (R.anim.right_slide_in, R.anim.left_slide_out);
                     finish();
+                    
           
                 }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                 	System.out.println("left to right");                	
                 	Intent intent = new Intent(getApplicationContext(),ShowRealEstate.class);
                     startActivity(intent);
-                    overridePendingTransition  (R.anim.right_slide_in, R.anim.right_slide_out);
+                    overridePendingTransition  (R.anim.left_slide_in, R.anim.right_slide_out);
+                    
                     finish();
+                    
                 }
             } catch (Exception e) {
                 // nothing

@@ -59,12 +59,10 @@ public class CMOVPA2Activity extends ListActivity {
     	public MyListAdapter(){
     		list = new ArrayList<HouseInfo>();
     		
-    		//TODO: deiscutir se vale a pena guardar o estado do imovel
-    		
     		//TODO: apagar
-    		HouseInfo h1 = new HouseInfo(1, "apartamento", "rua over 9000", "Porto", 4, "venda");
-    		HouseInfo h2 = new HouseInfo(2, "moradia", "rua do alem", "Vila Real", 8, "venda");
-    		HouseInfo h3 = new HouseInfo(3, "castelo", "rua americana", "Dubai", 30, "vendida");  		
+    		HouseInfo h1 = new HouseInfo(1, "Flat", "rua over 9000", "Porto", 4, "venda");
+    		HouseInfo h2 = new HouseInfo(2, "House", "rua do alem", "Vila Real", 8, "venda");
+    		HouseInfo h3 = new HouseInfo(3, "Castle", "rua americana", "Dubai", 30, "vendida");  		
     		
     		list.add(h1);
     		list.add(h2);
@@ -99,15 +97,15 @@ public class CMOVPA2Activity extends ListActivity {
         		 ((TextView) convertView.findViewById(R.id.list_child_address)).setText(house.getAddress());
 				 
 				
-				if(house.getState().equalsIgnoreCase("vendida"))
+				if(!house.isFor_sale())
 					((RelativeLayout)convertView.findViewById(R.id.list_child_layout)).setBackgroundResource(R.drawable.background_sold);
 				else
 					((RelativeLayout)convertView.findViewById(R.id.list_child_layout)).setBackgroundResource(R.drawable.background_selling);
 				 
 				 
-				 if(house.getType().equalsIgnoreCase("apartamento"))
+				 if(house.getKind().equalsIgnoreCase("Flat"))
 					 ((ImageView)convertView.findViewById(R.id.list_child_image)).setImageResource(R.drawable.flat_icon);
-				 else if(house.getType().equalsIgnoreCase("moradia"))
+				 else if(house.getKind().equalsIgnoreCase("House"))
 					 ((ImageView)convertView.findViewById(R.id.list_child_image)).setImageResource(R.drawable.house_icon);
 				 else
 					 ((ImageView)convertView.findViewById(R.id.list_child_image)).setImageResource(R.drawable.castle_icon);

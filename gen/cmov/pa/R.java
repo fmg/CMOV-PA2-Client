@@ -9,8 +9,10 @@ package cmov.pa;
 
 public final class R {
     public static final class anim {
-        public static final int right_slide_in=0x7f040000;
-        public static final int right_slide_out=0x7f040001;
+        public static final int left_slide_in=0x7f040000;
+        public static final int left_slide_out=0x7f040001;
+        public static final int right_slide_in=0x7f040002;
+        public static final int right_slide_out=0x7f040003;
     }
     public static final class attr {
     }

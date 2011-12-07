@@ -4,20 +4,29 @@ public class HouseInfo {
 
 	int id;
 	String address;
-	int bedrooms;
-	String type;
+	String bedrooms;
+	String kind;
 	String city;
-	String state;
+	boolean for_sale;
+	String photo;
+	String wc;
+	String price;
+	String extras;
 	
 	
-	public HouseInfo(int id, String type, String address, String city, int bedrooms, String state){
+	public HouseInfo(int id, String kind, String address, String city, String bedrooms, 
+					String wcs, String extras , String photo ,boolean state){
 		this.id = id;
 		this.address = address;
 		this.bedrooms = bedrooms;
-		this.type = type;
+		this.kind = kind;
 		this.city = city;
-		this.state = state;
+		this.for_sale = state;
+		this.wc = wcs;
+		this.photo = photo;
+		this.extras = extras;
 	}
+
 	
 	public int getId() {
 		return id;
@@ -29,26 +38,42 @@ public class HouseInfo {
 	}
 
 
-	public int getBedrooms() {
+	public String getBedrooms() {
 		return bedrooms;
 	}
 
 
-	public String getType() {
-		return type;
+	public String getKind() {
+		return kind;
 	}
 	
 	
 	public String getCity() {
 		return city;
 	}
-	
-	
 
-	public String getState() {
-		return state;
+
+	public String getPhoto() {
+		return photo;
+	}
+	
+	
+	public boolean isFor_sale() {
+		return for_sale;
 	}
 
 
+	public String getWc() {
+		return wc;
+	}
 
+
+	public String getPrice() {
+		return price;
+	}
+
+
+	public String getExtras() {
+		return extras;
+	}
 }
