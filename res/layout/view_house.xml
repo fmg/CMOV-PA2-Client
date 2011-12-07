@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical">
+
+
+	<RelativeLayout 
+	    android:id="@+id/RelativeLayout1"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical" >
+	
+	    <RatingBar
+	        android:id="@+id/ratingBar1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentTop="true"
+	        android:numStars="1"
+	        android:stepSize="1" />
+	
+	    <ImageView
+	        android:id="@+id/imageView1"
+	        android:layout_width="400px"
+	        android:layout_height="400px"
+	        android:layout_below="@+id/ratingBar1"
+	        android:layout_centerHorizontal="true"
+	        android:src="@drawable/ic_launcher"/>
+	
+	    <TextView
+	        android:id="@+id/view_house_selling_state"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:text="Selling State"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	
+	    <TextView
+	        android:id="@+id/view_house_type"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/imageView1"
+	        android:text="Type"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	
+	    <TextView
+	        android:id="@+id/view_house_bedrooms"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/imageView1"
+	        android:layout_toRightOf="@+id/view_house_type"
+	        android:text="TX"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	
+	    <TextView
+	        android:id="@+id/view_house_address"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/view_house_type"
+	        android:text="Address"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	
+	    <TextView
+	        android:id="@+id/view_house_price"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+id/imageView1"
+	        android:text="Price"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	
+	    <TextView
+	        android:id="@+id/view_house_city"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/view_house_address"
+	        android:text="City"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	
+	    <TextView
+	        android:id="@+id/view_house_wc"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/view_house_city"
+	        android:text="WC"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	
+	    <TextView
+	        android:id="@+id/view_house_extras"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/view_house_wc"
+	        android:text="Extras"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	
+	</RelativeLayout>
+</ScrollView>
