@@ -8,6 +8,7 @@ import cmov.pa.utils.HouseInfo;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -22,8 +24,7 @@ import android.widget.Toast;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 public class CMOVPA2Activity extends ListActivity {
-	
-	
+
 	MyListAdapter mAdapter;
 	
     /** Called when the activity is first created. */
@@ -36,6 +37,17 @@ public class CMOVPA2Activity extends ListActivity {
         mAdapter = new MyListAdapter();
 		setListAdapter(mAdapter);
     }
+    
+    
+    @Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		
+		Intent intent = new Intent(getApplicationContext(),ShowRealEstate.class);
+        startActivity(intent);
+	}
+
+
     
     
     
