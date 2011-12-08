@@ -2,14 +2,13 @@ package cmov.pa;
 
 import java.util.ArrayList;
 
+import com.google.android.c2dm.C2DMessaging;
+
 import cmov.pa.utils.HouseInfo;
 
-
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +17,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 
 public class CMOVPA2Activity extends ListActivity {
 
 	MyListAdapter mAdapter;
+	Api api;
 	
     /** Called when the activity is first created. */
     @Override
@@ -33,9 +30,16 @@ public class CMOVPA2Activity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_real_estates);
         
+        api = new Api();
+        
+        api.dbAdapter = new cmov.pa.database.DatabaseAdapter(getApplicationContext());
+        
+        
         
         mAdapter = new MyListAdapter();
 		setListAdapter(mAdapter);
+		
+		C2DMessaging.register(this, api.c2dmAccount);
     }
     
     

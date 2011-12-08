@@ -5,6 +5,14 @@
     android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="10" />
+    
+    
+   <permission android:name="cmov.pa.permission.C2D_MESSAGE"
+              android:protectionLevel="signature" />
+  <uses-permission android:name="cmov.pa.permission.C2D_MESSAGE" />
+  <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -19,6 +27,20 @@
             </intent-filter>
         </activity>
         <activity android:name="ShowRealEstate" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"></activity>
+        
+       	<service android:name=".C2DMReceiver" />
+       	
+       	<receiver android:name="com.google.android.c2dm.C2DMBroadcastReceiver"
+              android:permission="com.google.android.c2dm.permission.SEND">
+		      <intent-filter>
+		        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+		        <category android:name="cmov.pa" />
+		      </intent-filter>
+		      <intent-filter>
+		        <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+		        <category android:name="cmov.pa" />
+		      </intent-filter>
+    	</receiver>
     </application>
 
 </manifest>
