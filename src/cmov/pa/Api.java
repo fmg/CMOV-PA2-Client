@@ -4,20 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,11 +19,11 @@ import org.json.JSONObject;
 import cmov.pa.utils.HouseInfo;
 
 import android.app.Application;
-import android.app.ListActivity;
+
 
 public class Api extends Application{
 	
-	public static String IP = "http://172.30.1.57:3000";
+	public static String IP = "http://95.92.19.188:3001";
 	public static cmov.pa.database.DatabaseAdapter dbAdapter;
 	public ArrayList<HouseInfo> list;
 	
@@ -106,8 +100,11 @@ public class Api extends Application{
         		
         		/*
         		 * public HouseInfo(int id, String kind, String address, String city, String bedrooms, 
-					String wcs, String extras , String photo ,boolean state){
+					String wcs, String extras , String photo ,boolean state, String price)
         		 */
+        		
+        		String photo = "/system/photos/"+jo.getInt("id")+"/original/"+jo.getString("photo");
+   		
         		HouseInfo h = new HouseInfo(jo.getInt("id"), 
         				jo.getString("kind"), 
         				jo.getString("address"), 
@@ -115,21 +112,30 @@ public class Api extends Application{
         				jo.getString("rooms"), 
         				jo.getString("wcs"),
         				jo.getString("extras"),
-        				jo.getString("photo"),
-        				jo.getBoolean("for_sale")); 
+        				photo,
+        				jo.getBoolean("for_sale"),
+        				jo.getString("price")); 
+        		
+        		houses.add(h);
         		
         	}
         	
-        	
-        	
         	return houses;
 		}
-		
-		
-		
-		
+
 		return houses;
 
+	}
+	
+	
+	public void inserFavourite(HouseInfo house){
+		dbAdapter.open();
+		
+		dbAdapter.createFavourite(house.getId(), house.getKind(), house.getAddress(), house.getCity(), 
+									house.getBedrooms(), house.getWcs(), house.getExtras(), 
+									house.getPhoto(), house.isFor_sale(), house.getPrice());
+		
+		dbAdapter.close();
 	}
 	
 	

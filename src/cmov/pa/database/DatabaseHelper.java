@@ -10,7 +10,27 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String DATABASE_NAME = "cmov.db";
 	private static final int DATABASE_VERSION = 1;
 	
-	private static final String DATABASE_CREATE_FAVOURITES = " CREATE TABLE favourites (_id INTEGER PRIMARY KEY, type TEXT,  address TEXT, city TEXT,bedrooms INT, state TEXT)";
+	public static final int COLUMN_ID = 0;
+	public static final int COLUMN_KIND = 1;
+	public static final int COLUMN_ADDRESS = 2;
+	public static final int COLUMN_CITY = 3;
+	public static final int COLUMN_BEDROOMS = 4;
+	public static final int COLUMN_WCS = 5;
+	public static final int COLUMN_FOR_SALE = 6;
+	public static final int COLUMN_EXTRAS = 7;
+	public static final int COLUMN_PRICE = 8;
+	public static final int COLUMN_PHOTO = 9;
+	
+	private static final String DATABASE_CREATE_FAVOURITES = " CREATE TABLE favourites (_id INTEGER PRIMARY KEY, " +
+			"kind TEXT,  " +
+			"address TEXT, " +
+			"city TEXT, " +
+			"bedrooms TEXT, " +
+			"wcs TEXT ," +
+			"for_sale INT, " +
+			"extras TEXT, " +
+			"price TEXT, " +
+			"photo TEXT)";
 	
 
 

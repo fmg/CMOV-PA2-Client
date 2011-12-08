@@ -9,22 +9,23 @@ public class HouseInfo {
 	String city;
 	boolean for_sale;
 	String photo;
-	String wc;
+	String wcs;
 	String price;
 	String extras;
 	
 	
 	public HouseInfo(int id, String kind, String address, String city, String bedrooms, 
-					String wcs, String extras , String photo ,boolean state){
+					String wcs, String extras , String photo ,boolean state, String price){
 		this.id = id;
 		this.address = address;
 		this.bedrooms = bedrooms;
 		this.kind = kind;
 		this.city = city;
 		this.for_sale = state;
-		this.wc = wcs;
+		this.wcs = wcs;
 		this.photo = photo;
 		this.extras = extras;
+		this.price = price;
 	}
 
 	
@@ -63,8 +64,8 @@ public class HouseInfo {
 	}
 
 
-	public String getWc() {
-		return wc;
+	public String getWcs() {
+		return wcs;
 	}
 
 

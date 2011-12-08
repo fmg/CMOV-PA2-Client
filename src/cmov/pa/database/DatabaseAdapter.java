@@ -42,14 +42,28 @@ public class DatabaseAdapter {
 		
 /////////////////////////////////////////////////////////////////////
 
-	public long createFavourite(int id, String name, String address, String city, int bedrooms) {
+	public long createFavourite(int id, String kind, String address, String city, String bedrooms, 
+			String wcs, String extras , String photo ,boolean for_sale, String price){
+		
+		int for_saleConvert;
+		if(for_sale)
+			for_saleConvert = 1;
+		else
+			for_saleConvert = 0;
+		
 		
 		ContentValues initialvalues = new ContentValues();
+		
 		initialvalues.put("_id", id);
-		initialvalues.put("name", name);
+		initialvalues.put("kind", kind);
 		initialvalues.put("address", address);
 		initialvalues.put("city", city);
 		initialvalues.put("bedrooms", bedrooms);
+		initialvalues.put("wcs", wcs);
+		initialvalues.put("extras", extras);
+		initialvalues.put("photo", photo);
+		initialvalues.put("for_sale", for_saleConvert);
+		initialvalues.put("price", price);
 
 		return database.insert("favourites", null, initialvalues);
 	}
@@ -71,7 +85,28 @@ public class DatabaseAdapter {
 	 	
 	 	favouritesCursor.moveToFirst();
 	 	do {
-	 		HouseInfo house = new HouseInfo(favouritesCursor.getInt(0), favouritesCursor.getString(1),favouritesCursor.getString(2),favouritesCursor.getString(3),favouritesCursor.getInt(4),favouritesCursor.getString(5));
+	 		/*
+	 		 * HouseInfo(int id, String kind, String address, String city, String bedrooms, 
+					String wcs, String extras , String photo ,boolean state, String price)
+	 		 */
+	 		
+	 		boolean for_sale;
+	 		if(favouritesCursor.getInt(dbHelper.COLUMN_FOR_SALE) > 0)
+	 			for_sale = true;
+	 		else
+	 			for_sale = false;
+	 		
+	 		HouseInfo house = new HouseInfo(favouritesCursor.getInt(dbHelper.COLUMN_ID), 
+	 				favouritesCursor.getString(dbHelper.COLUMN_KIND),
+	 				favouritesCursor.getString(dbHelper.COLUMN_ADDRESS),
+	 				favouritesCursor.getString(dbHelper.COLUMN_CITY),
+	 				favouritesCursor.getString(dbHelper.COLUMN_BEDROOMS),
+	 				favouritesCursor.getString(dbHelper.COLUMN_WCS),
+	 				favouritesCursor.getString(dbHelper.COLUMN_EXTRAS),
+	 				favouritesCursor.getString(dbHelper.COLUMN_PHOTO),
+	 				for_sale,
+	 				favouritesCursor.getString(dbHelper.COLUMN_PRICE));
+	 		
 	 		favourites.add(house);
 	 	}while(favouritesCursor.moveToNext());
 	 	favouritesCursor.close();
