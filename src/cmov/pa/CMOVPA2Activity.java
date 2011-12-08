@@ -2,6 +2,7 @@ package cmov.pa;
 
 import java.util.ArrayList;
 
+import com.google.android.c2dm.C2DMBaseReceiver;
 import com.google.android.c2dm.C2DMessaging;
 
 import cmov.pa.utils.HouseInfo;
@@ -10,6 +11,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +41,14 @@ public class CMOVPA2Activity extends ListActivity {
         mAdapter = new MyListAdapter();
 		setListAdapter(mAdapter);
 		
-		C2DMessaging.register(this, api.c2dmAccount);
+		
+		//se ainda nao estiver registado, regista-se
+		if(C2DMessaging.getRegistrationId(this).equals(""))
+			C2DMessaging.register(this, api.c2dmAccount);
+		else
+			startService(new Intent(this, C2DMReceiver.class));//comeca o servico
+		
+		
     }
     
     
@@ -114,4 +123,20 @@ public class CMOVPA2Activity extends ListActivity {
 			return convertView;
 		}
 	}
+    
+    
+    
+    private void stopService() {
+      	Log.w("C2DMReceiver", "Stopping service...");
+        if (stopService(new Intent(this, C2DMReceiver.class)))
+      	  Log.w("C2DMReceiver", "stopService was successful");
+        else
+         	Log.w("C2DMReceiver", "stopService was unsuccessful");
+      }
+
+      @Override
+      public void onDestroy() {
+      	stopService();
+        super.onDestroy();
+      }
 }

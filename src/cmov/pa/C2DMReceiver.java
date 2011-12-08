@@ -18,10 +18,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import com.google.android.c2dm.C2DMBaseReceiver;
+import com.google.android.c2dm.C2DMessaging;
 
 public class C2DMReceiver extends C2DMBaseReceiver {
-  public C2DMReceiver() {
-    super("cmov.c2dm@gmail.com");
+  public C2DMReceiver() {  
+    super(Api.c2dmAccount);
   }
 
   @Override
@@ -41,6 +42,6 @@ public class C2DMReceiver extends C2DMBaseReceiver {
   
   @Override
   protected void onMessage(Context context, Intent intent) {
-    Log.w("C2DMReceiver", intent.getStringExtra("payload"));
+    Log.w("C2DMReceiver", intent.getStringExtra("data.property_kind") + " " + intent.getStringExtra("data.property_city") + " "+ intent.getStringExtra("data.property_id"));
   }
 }

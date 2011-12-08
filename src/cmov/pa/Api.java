@@ -26,7 +26,7 @@ public class Api extends Application{
 	public static String IP = "http://95.92.19.188:3001";
 	public static cmov.pa.database.DatabaseAdapter dbAdapter;
 	public ArrayList<HouseInfo> list;
-	public final String c2dmAccount = "cmov.c2dm@gmail.com"; 
+	public final static String c2dmAccount = "cmov.c2dm@gmail.com"; 
 	
 	public Api(){
 		list = new ArrayList<HouseInfo>();
