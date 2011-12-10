@@ -22,12 +22,7 @@ public class ShowRealEstate  extends Activity {
 	 private static final int SWIPE_THRESHOLD_VELOCITY = 150;
 	 private GestureDetector gestureDetector;
 	 View.OnTouchListener gestureListener;
-	 
-	 int scroll = 0;
-	 private final int scrollDesta = 20;
-	 int width;
-	 int height;
-	 
+
 	
   	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,10 +38,6 @@ public class ShowRealEstate  extends Activity {
                 return false;
             }
         };
-        
-        Display display = getWindowManager().getDefaultDisplay(); 
-        width = display.getWidth();
-        height = display.getHeight();
 
     }
   	
