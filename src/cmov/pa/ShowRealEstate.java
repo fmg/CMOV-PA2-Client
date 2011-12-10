@@ -47,49 +47,19 @@ public class ShowRealEstate  extends Activity {
         Display display = getWindowManager().getDefaultDisplay(); 
         width = display.getWidth();
         height = display.getHeight();
-        
-        //System.out.println(width + " " + height);
-        
-        //((RelativeLayout)findViewById(R.id.RelativeLayout1)).scrollTo(0, 0);
 
     }
   	
   	
+  	@Override
+  	public boolean dispatchTouchEvent(MotionEvent ev){
+  		super.dispatchTouchEvent(ev);
+  		return gestureDetector.onTouchEvent(ev);
+  	}
+  	
+  	
   	class MyGestureDetector extends SimpleOnGestureListener {
-        @Override
-		public boolean onScroll(MotionEvent e1, MotionEvent e2,
-				float distanceX, float distanceY) {
-        	
-        	RelativeLayout r = (RelativeLayout)findViewById(R.id.RelativeLayout1);
-        	if(e1.getY() < e2.getY()){
-        		scroll -= 20;
-        		//System.out.println("scroll up");
-        		if(scroll <= 0){
-        			r.scrollTo(0, 0);
-        			scroll = 0;
-        		}else{
-        			r.scrollTo(0, scroll);
-        		}
-        	}else{
-        		scroll+= 20;
-        		//System.out.println("scroll down");
-        		if(scroll >= Math.abs(r.getHeight()- height)){
-        			r.scrollTo(0, Math.abs(r.getHeight()- height));
-        			scroll = Math.abs(r.getHeight()- height);
-        		}else{
-        			r.scrollTo(0, scroll);
-        		}
-        		
-        	}
-        	
-        	System.out.println(r.getHeight());
-        	System.out.println(r.getWidth());
-        	//System.out.println("baseline-> " + r.getBaseline());
-        	//System.out.println("bottom-> " +r.getBottom());
-
-			return super.onScroll(e1, e2, distanceX, distanceY);
-		}
-
+        
 		@Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             try {

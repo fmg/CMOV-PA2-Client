@@ -35,6 +35,8 @@ public final class R {
         public static final int list_child_layout=0x7f060000;
         public static final int ratingBar1=0x7f060007;
         public static final int textView1=0x7f060005;
+        public static final int textView2=0x7f060011;
+        public static final int textView3=0x7f060012;
         public static final int view_house_address=0x7f06000c;
         public static final int view_house_bedrooms=0x7f06000b;
         public static final int view_house_city=0x7f06000e;
