@@ -18,6 +18,8 @@ package com.google.android.c2dm;
 
 import java.io.IOException;
 
+import cmov.pa.Api;
+
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -59,7 +61,8 @@ public abstract class C2DMBaseReceiver extends IntentService {
 
     private static PowerManager.WakeLock mWakeLock;
     private final String senderId;
-
+    
+    
     /**
      * The C2DMReceiver class must create a no-arg constructor and pass the 
      * sender id to be used for registration.
@@ -67,7 +70,7 @@ public abstract class C2DMBaseReceiver extends IntentService {
     public C2DMBaseReceiver(String senderId) {
         // senderId is used as base name for threads, etc.
         super(senderId);
-        this.senderId = senderId;
+        this.senderId = senderId;    
     }
     
     /**

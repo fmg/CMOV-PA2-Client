@@ -19,17 +19,31 @@ import org.json.JSONObject;
 import cmov.pa.utils.HouseInfo;
 
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 
 
 public class Api extends Application{
 	
 	public static String IP = "http://95.92.19.188:3001";
 	public static cmov.pa.database.DatabaseAdapter dbAdapter;
-	public ArrayList<HouseInfo> list;
+	
 	public final static String c2dmAccount = "cmov.c2dm@gmail.com"; 
+	private static final String TAG = "BackgroundService";
+	
+	
+	public static NotificationManager mNotificationManager;
+	
+	
+	public ArrayList<HouseInfo> new_list;
+	public ArrayList<HouseInfo> updated_list;
 	
 	public Api(){
-		list = new ArrayList<HouseInfo>();
+		new_list = new ArrayList<HouseInfo>();
+		updated_list = new ArrayList<HouseInfo>();
 	}
 	
 	public int RegisterKey(String key){
@@ -149,6 +163,18 @@ public class Api extends Application{
         }
         in.close();
         return sb.toString();
-}
+	}
+	
+	
+	public void displayNotificationMessage(Context context, String message) {
+		
+		
+  	    Notification notification = new Notification(R.drawable.notification_icon, message, System.currentTimeMillis());
+  	    notification.flags = Notification.FLAG_AUTO_CANCEL;
+  	    
+  	    PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context, ShowRealEstate.class), 0);
+  	    notification.setLatestEventInfo(context, TAG, message, contentIntent);
+  	    mNotificationManager.notify(0, notification);
+  	  }
 
 }

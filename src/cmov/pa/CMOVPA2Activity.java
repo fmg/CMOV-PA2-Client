@@ -8,6 +8,9 @@ import com.google.android.c2dm.C2DMessaging;
 import cmov.pa.utils.HouseInfo;
 
 import android.app.ListActivity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,6 +40,7 @@ public class CMOVPA2Activity extends ListActivity {
         api.dbAdapter = new cmov.pa.database.DatabaseAdapter(getApplicationContext());
         
         
+        api.mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         
         mAdapter = new MyListAdapter();
 		setListAdapter(mAdapter);
@@ -49,8 +53,10 @@ public class CMOVPA2Activity extends ListActivity {
 			startService(new Intent(this, C2DMReceiver.class));//comeca o servico
 		*/
 		
-		Intent intent = new Intent(getApplicationContext(),ShowRealEstate.class);
-        startActivity(intent);
+		System.out.println(this.getPackageName());
+		
+		api.displayNotificationMessage(this,"hello world");
+		//displayNotificationMessage("hello world 2");
 		
     }
     
@@ -142,4 +148,8 @@ public class CMOVPA2Activity extends ListActivity {
       	stopService();
         super.onDestroy();
       }
+      
+      
+      
+      
 }

@@ -43,5 +43,6 @@ public class C2DMReceiver extends C2DMBaseReceiver {
   @Override
   protected void onMessage(Context context, Intent intent) {
     Log.w("C2DMReceiver", intent.getStringExtra("data.property_kind") + " " + intent.getStringExtra("data.property_city") + " "+ intent.getStringExtra("data.property_id"));
+    //TODO: lancar notificacao
   }
 }

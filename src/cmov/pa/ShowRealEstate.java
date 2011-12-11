@@ -40,7 +40,7 @@ public class ShowRealEstate  extends Activity {
         };
 
     }
-  	
+
   	
   	@Override
   	public boolean dispatchTouchEvent(MotionEvent ev){
@@ -82,12 +82,6 @@ public class ShowRealEstate  extends Activity {
     }
   	
   	
-  	 @Override
-     public boolean onTouchEvent(MotionEvent event) {
-         if (gestureDetector.onTouchEvent(event))
- 	        return true;
- 	    else
- 	    	return false;
-     }
+  	 
   	 
 }
