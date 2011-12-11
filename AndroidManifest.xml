@@ -41,6 +41,7 @@
 		        <category android:name="cmov.pa" />
 		      </intent-filter>
     	</receiver>
+       	<activity android:name="NotificationList"></activity>
     </application>
 
 </manifest>

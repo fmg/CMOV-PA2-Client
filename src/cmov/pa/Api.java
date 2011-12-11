@@ -32,7 +32,7 @@ public class Api extends Application{
 	public static cmov.pa.database.DatabaseAdapter dbAdapter;
 	
 	public final static String c2dmAccount = "cmov.c2dm@gmail.com"; 
-	private static final String TAG = "BackgroundService";
+	private static final String TAG = "Real Estate App";
 	
 	
 	public static NotificationManager mNotificationManager;
@@ -40,13 +40,14 @@ public class Api extends Application{
 	
 	public ArrayList<HouseInfo> new_list;
 	public ArrayList<HouseInfo> updated_list;
+	public static int count = 1;
 	
 	public Api(){
 		new_list = new ArrayList<HouseInfo>();
 		updated_list = new ArrayList<HouseInfo>();
 	}
 	
-	public int RegisterKey(String key){
+	public int registerKey(String key){
 		
 		final HttpClient httpClient =  new DefaultHttpClient();
 		HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 3000);
@@ -76,8 +77,19 @@ public class Api extends Application{
            
        
 	}
+
 	
-	
+	public void updateNotificationPendingLists(String operation, int id, String kind, String city){	
+		if(operation.equals("update")){
+			if(hasFavourite(id)){
+				HouseInfo h = new HouseInfo(id,kind,city);
+				updated_list.add(h);
+			}
+		}else if(operation.equals("new")){
+			HouseInfo h = new HouseInfo(id,kind,city);
+			new_list.add(h);
+		}	
+	}
 	
 	
 	public ArrayList<HouseInfo> updateList(String date) throws ClientProtocolException, IOException, JSONException{
@@ -113,11 +125,6 @@ public class Api extends Application{
         	for(int i = 0; i < messageReceived.length(); i++){
         		JSONObject jo = messageReceived.getJSONObject(i);
         		
-        		/*
-        		 * public HouseInfo(int id, String kind, String address, String city, String bedrooms, 
-					String wcs, String extras , String photo ,boolean state, String price)
-        		 */
-        		
         		String photo = "/system/photos/"+jo.getInt("id")+"/original/"+jo.getString("photo");
    		
         		HouseInfo h = new HouseInfo(jo.getInt("id"), 
@@ -143,6 +150,13 @@ public class Api extends Application{
 	}
 	
 	
+	public void deleteFavourite(int id){
+		dbAdapter.open();
+		dbAdapter.removeFavourite(id);
+		dbAdapter.close();
+	}
+	
+	
 	public void inserFavourite(HouseInfo house){
 		dbAdapter.open();
 		
@@ -153,6 +167,33 @@ public class Api extends Application{
 		dbAdapter.close();
 	}
 	
+	public boolean hasFavourite(int id){
+		boolean ret;
+		
+		dbAdapter.open();
+		ret = dbAdapter.hasFavourite(id);
+		dbAdapter.close();
+		
+		return ret;
+		
+	}
+	
+	
+	public void updateVersion(){
+		dbAdapter.open();
+		dbAdapter.updateVersion();
+		dbAdapter.close();
+	}
+	
+	
+	public String getLastUpdateDate(){
+		
+		dbAdapter.open();
+		String ret = dbAdapter.getLastUpdateDate();
+		dbAdapter.close();
+		
+		return ret;
+	}
 	
 	
 	private String read(InputStream in) throws IOException {
@@ -166,13 +207,24 @@ public class Api extends Application{
 	}
 	
 	
-	public void displayNotificationMessage(Context context, String message) {
+	public void displayNotificationMessage(Context context) {
 		
+		String message = "";
+		if(new_list.size() > 0){
+			message+= new_list.size()+ " New Real Estates.";
+		}
+		
+		if(updated_list.size() > 0){
+			message+= updated_list.size()+ " Updates To Your Real Estates.";
+		}
 		
   	    Notification notification = new Notification(R.drawable.notification_icon, message, System.currentTimeMillis());
   	    notification.flags = Notification.FLAG_AUTO_CANCEL;
   	    
-  	    PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context, ShowRealEstate.class), 0);
+  	    notification.number = count;
+  	    count++;
+  	    
+  	    PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context, NotificationList.class), 0);
   	    notification.setLatestEventInfo(context, TAG, message, contentIntent);
   	    mNotificationManager.notify(0, notification);
   	  }

@@ -32,7 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			"price TEXT, " +
 			"photo TEXT)";
 	
-
+	private static final String DATABASE_CREATE_VERSION = " CREATE TABLE version (date TEXT PRIMARY KEY)";
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -41,6 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		database.execSQL(DATABASE_CREATE_FAVOURITES);
+		database.execSQL(DATABASE_CREATE_VERSION);
 	}
 	
 	@Override
@@ -51,6 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 						+ newVersion + ", which will destroy all old data");
 		
 		database.execSQL(" DROP TABLE IF EXISTS favourites");
+		database.execSQL(" DROP TABLE IF EXISTS version");
 		
 		onCreate(database);
 	}

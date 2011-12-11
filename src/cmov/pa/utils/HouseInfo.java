@@ -27,6 +27,13 @@ public class HouseInfo {
 		this.extras = extras;
 		this.price = price;
 	}
+	
+	
+	public HouseInfo(int id, String kind, String city){
+			this.id = id;
+			this.kind = kind;
+			this.city = city;
+	}
 
 	
 	public int getId() {

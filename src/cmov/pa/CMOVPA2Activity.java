@@ -1,6 +1,9 @@
 package cmov.pa;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.google.android.c2dm.C2DMBaseReceiver;
 import com.google.android.c2dm.C2DMessaging;
@@ -53,10 +56,17 @@ public class CMOVPA2Activity extends ListActivity {
 			startService(new Intent(this, C2DMReceiver.class));//comeca o servico
 		*/
 		
-		System.out.println(this.getPackageName());
 		
-		api.displayNotificationMessage(this,"hello world");
+		api.displayNotificationMessage(this);
+		api.displayNotificationMessage(this);
+		api.displayNotificationMessage(this);
+		api.displayNotificationMessage(this);
 		//displayNotificationMessage("hello world 2");
+		
+		
+		
+		
+		
 		
     }
     

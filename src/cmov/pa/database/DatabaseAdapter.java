@@ -1,6 +1,10 @@
 package cmov.pa.database;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import cmov.pa.utils.HouseInfo;
 
@@ -37,10 +41,36 @@ public class DatabaseAdapter {
 
 	 	database.execSQL(resetFavourites);
 	 	
+	 	
+	 	String resetVersion = "delete from version";  
+
+	 	database.execSQL(resetVersion);
+	 	
 	}
 		
 		
 /////////////////////////////////////////////////////////////////////
+	
+	
+	public boolean hasFavourite(int id){
+		String selectFavourite = "Select * from favourites where id="+id;  
+
+		Cursor favouritesCursor = database.rawQuery(selectFavourite, null);
+		
+		
+		if(favouritesCursor.getCount() > 0)
+			return true;
+		else
+			return false;
+		
+	}
+	
+	public void removeFavourite(int id){
+		String deleteFavourite = "delete from favourites where id="+id;  
+
+	 	database.execSQL(deleteFavourite);
+	}
+	
 
 	public long createFavourite(int id, String kind, String address, String city, String bedrooms, 
 			String wcs, String extras , String photo ,boolean for_sale, String price){
@@ -116,6 +146,51 @@ public class DatabaseAdapter {
 	
 	
 	
+/////////////////////////////////////////////////////////////////////
+	
+	public String getLastUpdateDate(){
+		
+		
+		String selectversion = "Select * from version";  
+		
+	 	Cursor versionCursor = database.rawQuery(selectversion, null);
+	 	
+	 	versionCursor.moveToFirst();
+	 	
+	 	if(versionCursor.getCount() == 0){
+	 		versionCursor.close();
+	 		return "";
+	 	}
+	 	
+	 	String ret =versionCursor.getString(0);
+	 	versionCursor.close();
+	 	
+	 	return ret;
+
+		
+	}
+	
+	
+	public long updateVersion(){
+
+		//elimina data antiga
+		String resetVersion = "delete from version";  
+	 	database.execSQL(resetVersion);
+		
+	 	
+	 	
+	 	//insere nova
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar cal = Calendar.getInstance();
+		String date = dateFormat.format(cal.getTime());
+		
+	
+		ContentValues initialvalues = new ContentValues();
+		initialvalues.put("date", date);
+		
+		return database.insert("version", null, initialvalues);
+	
+	}
 	
 
 }
