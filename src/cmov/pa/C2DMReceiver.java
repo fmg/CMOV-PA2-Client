@@ -21,28 +21,42 @@ import com.google.android.c2dm.C2DMBaseReceiver;
 import com.google.android.c2dm.C2DMessaging;
 
 public class C2DMReceiver extends C2DMBaseReceiver {
-  public C2DMReceiver() {  
-    super(Api.c2dmAccount);
-  }
+	
+	Api api;
+	
+	
+	public C2DMReceiver() {  
+		super(Api.c2dmAccount);
+		
+		api = (Api)getApplicationContext();
+	}
 
-  @Override
-  public void onRegistered(Context context, String registrationId) {
-    Log.w("C2DMReceiver-onRegistered", registrationId);
-  }
+	@Override
+	public void onRegistered(Context context, String registrationId) {
+		Log.w("C2DMReceiver-onRegistered", registrationId);
+	}
   
-  @Override
-  public void onUnregistered(Context context) {
-    Log.w("C2DMReceiver-onUnregistered", "got here!");
-  }
+	@Override
+	public void onUnregistered(Context context) {
+		Log.w("C2DMReceiver-onUnregistered", "got here!");
+	}
   
-  @Override
-  public void onError(Context context, String errorId) {
-    Log.w("C2DMReceiver-onError", errorId);
-  }
+	@Override
+	public void onError(Context context, String errorId) {
+		Log.w("C2DMReceiver-onError", errorId);
+	}
   
-  @Override
-  protected void onMessage(Context context, Intent intent) {
-    Log.w("C2DMReceiver", intent.getStringExtra("data.property_kind") + " " + intent.getStringExtra("data.property_city") + " "+ intent.getStringExtra("data.property_id"));
-    //TODO: lancar notificacao
-  }
+	@Override
+	protected void onMessage(Context context, Intent intent) {
+		Log.w("C2DMReceiver",intent.getStringExtra("data.operation") + " " + intent.getStringExtra("data.property_kind") + " " + intent.getStringExtra("data.property_city") + " "+ intent.getStringExtra("data.property_id"));
+	
+		
+		api.updateNotificationPendingLists(intent.getStringExtra("data.operation"),
+				Integer.parseInt(intent.getStringExtra("data.property_id")),	
+				intent.getStringExtra("data.property_kind"),
+				intent.getStringExtra("data.property_city"));
+		
+		
+		api.displayNotificationMessage(this);
+	}
 }

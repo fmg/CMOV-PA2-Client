@@ -8,6 +8,7 @@ import java.util.Calendar;
 import com.google.android.c2dm.C2DMBaseReceiver;
 import com.google.android.c2dm.C2DMessaging;
 
+import cmov.pa.database.DatabaseAdapter;
 import cmov.pa.utils.HouseInfo;
 
 import android.app.ListActivity;
@@ -40,7 +41,7 @@ public class CMOVPA2Activity extends ListActivity {
         
         api = new Api();
         
-        api.dbAdapter = new cmov.pa.database.DatabaseAdapter(getApplicationContext());
+        api.dbAdapter = new DatabaseAdapter(getApplicationContext());
         
         
         api.mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
