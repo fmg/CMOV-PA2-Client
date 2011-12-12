@@ -49,21 +49,21 @@ public class CMOVPA2Activity extends ListActivity {
         mAdapter = new MyListAdapter();
 		setListAdapter(mAdapter);
 		
-		/*
+		
 		//se ainda nao estiver registado, regista-se
 		if(C2DMessaging.getRegistrationId(this).equals(""))
 			C2DMessaging.register(this, api.c2dmAccount);
 		else
 			startService(new Intent(this, C2DMReceiver.class));//comeca o servico
-		*/
 		
 		
+		/*
 		api.displayNotificationMessage(this);
 		api.displayNotificationMessage(this);
 		api.displayNotificationMessage(this);
 		api.displayNotificationMessage(this);
 		//displayNotificationMessage("hello world 2");
-		
+		*/
 		
 		
 		
