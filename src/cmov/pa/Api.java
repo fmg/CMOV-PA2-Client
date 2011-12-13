@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.ProtocolException;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
@@ -28,7 +29,7 @@ import android.content.Intent;
 
 public class Api extends Application{
 	
-	public static String IP = "http://95.92.19.188:3001";
+	public static final String IP = "http://95.92.19.188:3001";
 	public static cmov.pa.database.DatabaseAdapter dbAdapter;
 	
 	public final static String c2dmAccount = "cmov.c2dm@gmail.com"; 
@@ -38,14 +39,10 @@ public class Api extends Application{
 	public static NotificationManager mNotificationManager;
 	
 	
-	public ArrayList<HouseInfo> new_list;
-	public ArrayList<HouseInfo> updated_list;
+	public static ArrayList<HouseInfo> new_list = new ArrayList<HouseInfo>(); ;
+	public static ArrayList<HouseInfo> updated_list = new ArrayList<HouseInfo>();
 	public static int count = 1;
 	
-	public Api(){
-		new_list = new ArrayList<HouseInfo>();
-		updated_list = new ArrayList<HouseInfo>();
-	}
 	
 	
 	
@@ -83,6 +80,55 @@ public class Api extends Application{
 		}
            
        
+	}
+	
+	
+	
+	public HouseInfo getHouseInfo(int id) throws ClientProtocolException, IOException, JSONException{
+		
+		final HttpClient httpClient =  new DefaultHttpClient();
+		HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 3000);
+		HttpResponse response=null;
+	   	
+		String url = IP + "/properties/"+id;
+		System.out.println(url);
+		
+			HttpGet httpget = new HttpGet(url);		   
+			httpget.setHeader("Accept", "application/json");
+	   
+			response = httpClient.execute(httpget);
+			
+			
+			HouseInfo house = new HouseInfo();
+			
+			if(response.getStatusLine().getStatusCode() == 200){
+				
+				InputStream instream = response.getEntity().getContent();
+	            String tmp = read(instream);
+				
+	            JSONObject messageReceived = new JSONObject(tmp);
+	            
+	            house.setAddress(messageReceived.getString("address"));
+	            house.setWcs(messageReceived.getString("bathrooms"));
+	            house.setCity(messageReceived.getString("city"));
+	            house.setExtras(messageReceived.getString("extras"));
+	            house.setFor_sale(messageReceived.getBoolean("for_sale"));
+	            house.setId(messageReceived.getInt("id"));
+	            house.setKind(messageReceived.getString("kind"));
+	            
+	            String photo = IP+"/system/photos/"+messageReceived.getInt("id")
+	            				+"/original/"+messageReceived.getString("photo_file_name");
+	            
+	            house.setPhoto(photo);
+	            house.setPrice(messageReceived.getString("price"));
+	            house.setBedrooms(messageReceived.getString("rooms"));
+	            
+				return house;
+			}else
+				
+				return house;
+		
+			
 	}
 
 	
@@ -161,16 +207,21 @@ public class Api extends Application{
 	
 	
 	
-	public void updateNotificationPendingLists(String operation, int id, String kind, String city){	
+	public boolean updateNotificationPendingLists(String operation, int id, String kind, String city){
 		if(operation.equals("update")){
 			if(hasFavourite(id)){
 				HouseInfo h = new HouseInfo(id,kind,city);
 				updated_list.add(h);
-			}
+				return true;
+			}else
+				return false;
 		}else if(operation.equals("new")){
 			HouseInfo h = new HouseInfo(id,kind,city);
 			new_list.add(h);
-		}	
+			return true;
+		}
+		
+		return false;
 	}
 	
 	

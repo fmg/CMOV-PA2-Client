@@ -2,25 +2,26 @@ package cmov.pa;
 
 import java.util.ArrayList;
 
-import cmov.pa.CMOVPA2Activity.MyListAdapter;
 import cmov.pa.utils.HouseInfo;
-import android.app.ListActivity;
-import android.app.NotificationManager;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class NotificationList extends ListActivity{
-	
-	MyListAdapter mAdapter;
+public class NotificationList extends Activity{
+
+	MyListAdapter newAdapter;
+	MyListAdapter updateAdapter;
 	Api api;
 	
     @Override
@@ -33,34 +34,88 @@ public class NotificationList extends ListActivity{
         api.count=1;
         
         
-        mAdapter = new MyListAdapter();
-		setListAdapter(mAdapter);
+        newAdapter = new MyListAdapter(api.new_list, R.drawable.new_icon);
+        
+        updateAdapter = new MyListAdapter(api.updated_list, R.drawable.new_icon);
+        
+        ((ListView)findViewById(R.id.listView1)).setAdapter(newAdapter);
+        ((ListView)findViewById(R.id.listView2)).setAdapter(updateAdapter);
 		
 		
-		api.displayNotificationMessage(this);
-		api.displayNotificationMessage(this);
+		if(newAdapter.getCount() == 0){
+			((RelativeLayout)findViewById(R.id.list_notification_new_container)).setVisibility(View.GONE);
+		}
+		
+		if(updateAdapter.getCount() == 0){
+			((RelativeLayout)findViewById(R.id.list_notification_updated_container)).setVisibility(View.GONE);
+		}
+		
+		
+		 ((ListView)findViewById(R.id.listView1)).setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				
+				ArrayList<Integer> tmp = newAdapter.getIdList();
+				
+				Intent intent = new Intent(getApplicationContext(),ShowRealEstate.class);
+				intent.putExtra("index", arg2);
+				intent.putExtra("mode", "online");
+				intent.putIntegerArrayListExtra("ids_list", tmp);
+		        startActivity(intent);
+				
+			}
+		});
+		 
+		 
+	     ((ListView)findViewById(R.id.listView2)).setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				
+				ArrayList<Integer> tmp = updateAdapter.getIdList();
+				
+				Intent intent = new Intent(getApplicationContext(),ShowRealEstate.class);
+				intent.putExtra("index", arg2);
+				intent.putExtra("mode", "online");
+				intent.putIntegerArrayListExtra("ids_list", tmp);
+	
+		        startActivity(intent);
+				
+			}
+		});
+			
     }
     
-    
     @Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
+	public void onBackPressed() {
+		api.new_list = new ArrayList<HouseInfo>();
+		api.updated_list = new ArrayList<HouseInfo>();
 		
-		Intent intent = new Intent(getApplicationContext(),ShowRealEstate.class);
-        startActivity(intent);
+		super.onBackPressed();
 	}
 
-    
 	
 	public class MyListAdapter extends BaseAdapter {
 
     	ArrayList<HouseInfo> list;
+    	int image_id;
     	
     	
-    	public MyListAdapter(){
-    		list = new ArrayList<HouseInfo>();
+    	public MyListAdapter(ArrayList<HouseInfo> list, int image_id){
+    		this.list = list;
+    		this.image_id = image_id;
     		
+    	}
+    	
+    	public ArrayList<Integer> getIdList(){
+    		ArrayList<Integer> l = new ArrayList<Integer>();
+    		for(HouseInfo h:list)
+    			l.add(h.getId());
+    		
+    		return l;
     	}
     	
 		@Override
@@ -86,27 +141,12 @@ public class NotificationList extends ListActivity{
         		 
         		 HouseInfo house = list.get(position);
         		 
-        		 System.out.println(house.getAddress());
         		 
-        		 ((TextView) convertView.findViewById(R.id.list_child_address)).setText(house.getAddress());
-				 
-				
-				if(!house.isFor_sale())
-					((RelativeLayout)convertView.findViewById(R.id.list_child_layout)).setBackgroundResource(R.drawable.background_sold);
-				else
-					((RelativeLayout)convertView.findViewById(R.id.list_child_layout)).setBackgroundResource(R.drawable.background_selling);
-				 
-				 
-				 if(house.getKind().equalsIgnoreCase("Flat"))
-					 ((ImageView)convertView.findViewById(R.id.list_child_image)).setImageResource(R.drawable.flat_icon);
-				 else if(house.getKind().equalsIgnoreCase("House"))
-					 ((ImageView)convertView.findViewById(R.id.list_child_image)).setImageResource(R.drawable.house_icon);
-				 else
-					 ((ImageView)convertView.findViewById(R.id.list_child_image)).setImageResource(R.drawable.castle_icon);
+				((ImageView)convertView.findViewById(R.id.list_child_image)).setImageResource(image_id);
 	
-				 
+				((TextView) convertView.findViewById(R.id.list_child_address)).setText("");
 				
-				 ((TextView) convertView.findViewById(R.id.list_child_bedrooms)).setText("T"+house.getBedrooms());
+				 ((TextView) convertView.findViewById(R.id.list_child_bedrooms)).setText(house.getKind());
 				 ((TextView) convertView.findViewById(R.id.list_child_city)).setText(house.getCity());
 				 
 			return convertView;

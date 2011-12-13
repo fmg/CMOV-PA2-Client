@@ -26,9 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ShowRealEstate" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"></activity>
+        <activity android:name="ShowRealEstate" android:theme="@android:style/Theme.NoTitleBar"></activity>
         
-       	<service android:name=".C2DMReceiver" />
+       	<service android:name="C2DMReceiver" />
        	
        	<receiver android:name="com.google.android.c2dm.C2DMBroadcastReceiver"
               android:permission="com.google.android.c2dm.permission.SEND">
@@ -41,7 +41,7 @@
 		        <category android:name="cmov.pa" />
 		      </intent-filter>
     	</receiver>
-       	<activity android:name="NotificationList"></activity>
+       	<activity android:name="NotificationList" android:theme="@android:style/Theme.NoTitleBar"></activity>
     </application>
 
 </manifest>

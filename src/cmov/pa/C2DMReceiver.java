@@ -18,17 +18,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import com.google.android.c2dm.C2DMBaseReceiver;
-import com.google.android.c2dm.C2DMessaging;
 
 public class C2DMReceiver extends C2DMBaseReceiver {
 	
-	//Api api;
+	Api api;
 	
 	
 	public C2DMReceiver() {  
 		super(Api.c2dmAccount);
 		
-		//api = (Api)getApplicationContext();
+		api = new Api();
+		
 	}
 
 	@Override
@@ -50,14 +50,15 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 	protected void onMessage(Context context, Intent intent) {
 		Log.w("C2DMReceiver",intent.getStringExtra("data.operation") + " " + intent.getStringExtra("data.property_kind") + " " + intent.getStringExtra("data.property_city") + " "+ intent.getStringExtra("data.property_id"));
 	
-		/*
-		api.updateNotificationPendingLists(intent.getStringExtra("data.operation"),
+		
+		boolean display = api.updateNotificationPendingLists(intent.getStringExtra("data.operation"),
 				Integer.parseInt(intent.getStringExtra("data.property_id")),	
 				intent.getStringExtra("data.property_kind"),
 				intent.getStringExtra("data.property_city"));
 		
 		
-		api.displayNotificationMessage(this);
-		*/
+		if(display)
+			api.displayNotificationMessage(this);
+		
 	}
 }

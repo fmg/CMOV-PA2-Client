@@ -1,20 +1,15 @@
 package cmov.pa;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 
-import com.google.android.c2dm.C2DMBaseReceiver;
+import java.util.ArrayList;
+
 import com.google.android.c2dm.C2DMessaging;
 
 import cmov.pa.database.DatabaseAdapter;
 import cmov.pa.utils.HouseInfo;
 
 import android.app.ListActivity;
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,11 +45,12 @@ public class CMOVPA2Activity extends ListActivity {
 		setListAdapter(mAdapter);
 		
 		
+		String id = C2DMessaging.getRegistrationId(this);
 		//se ainda nao estiver registado, regista-se
-		if(C2DMessaging.getRegistrationId(this).equals(""))
+		if(id.equals(""))
 			C2DMessaging.register(this, api.c2dmAccount);
 		else
-			startService(new Intent(this, C2DMReceiver.class));//comeca o servico
+			System.out.println("registration id ->" + id);
 		
 		
 		/*

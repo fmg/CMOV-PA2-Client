@@ -1,6 +1,5 @@
 package cmov.pa.database;
 
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class DatabaseAdapter {
 	
 	
 	public boolean hasFavourite(int id){
-		String selectFavourite = "Select * from favourites where id="+id;  
+		String selectFavourite = "Select * from favourites where _id="+id;  
 
 		Cursor favouritesCursor = database.rawQuery(selectFavourite, null);
 		

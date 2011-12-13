@@ -8,16 +8,61 @@
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
         android:text="Notification List"
-        android:textAppearance="?android:attr/textAppearanceLarge" android:gravity="center_horizontal"/>
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-<ListView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/list"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
+    <RelativeLayout
+        android:id="@+id/list_notification_new_container"
+        android:layout_width="wrap_content"
+        android:layout_height="242dp"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" >
 
-</ListView>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="New" />
 
+        <ListView
+            android:id="@+id/listView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView2" >
 
-    </LinearLayout>
+        </ListView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/list_notification_updated_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/list_notification_new_container">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Updated" />
+
+        <ListView
+            android:id="@+id/listView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView3" >
+        </ListView>
+    </RelativeLayout>
+
+</LinearLayout>
