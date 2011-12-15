@@ -12,7 +12,7 @@
 	    android:orientation="vertical" >
 	
 	    <RatingBar
-	        android:id="@+id/ratingBar1"
+	        android:id="@+id/view_house_favourite"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentRight="true"
@@ -21,10 +21,10 @@
 	        android:stepSize="1" />
 	
 	    <ImageView
-	        android:id="@+id/imageView1"
+	        android:id="@+id/view_house_image"
 	        android:layout_width="400px"
 	        android:layout_height="400px"
-	        android:layout_below="@+id/ratingBar1"
+	        android:layout_below="@+id/view_house_favourite"
 	        android:layout_centerHorizontal="true"
 	        android:src="@drawable/ic_launcher"/>
 	
@@ -42,7 +42,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
-	        android:layout_below="@+id/imageView1"
+	        android:layout_below="@+id/view_house_image"
 	        android:text="Type"
 	        android:textAppearance="?android:attr/textAppearanceLarge" />
 	
@@ -50,7 +50,7 @@
 	        android:id="@+id/view_house_bedrooms"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/imageView1"
+	        android:layout_below="@+id/view_house_image"
 	        android:layout_toRightOf="@+id/view_house_type"
 	        android:text="TX"
 	        android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -69,7 +69,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentRight="true"
-	        android:layout_below="@+id/imageView1"
+	        android:layout_below="@+id/view_house_image"
 	        android:text="Price"
 	        android:textAppearance="?android:attr/textAppearanceLarge" />
 	
@@ -98,35 +98,6 @@
 	        android:layout_alignParentLeft="true"
 	        android:layout_below="@+id/view_house_wc"
 	        android:text="Extras"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-	    <TextView
-	        android:id="@+id/textView1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_below="@+id/view_house_extras"
-	        android:text="Large Text"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />
-	
-	    
-	    <TextView
-	        android:id="@+id/textView2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_below="@+id/textView1"
-	        android:text="Large Text"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />
-	    
-	    
-	    <TextView
-	        android:id="@+id/textView3"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_below="@+id/textView2"
-	        android:text="Large Text"
 	        android:textAppearance="?android:attr/textAppearanceLarge" />
 	    
 	</RelativeLayout>

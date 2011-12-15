@@ -47,32 +47,46 @@ public class CMOVPA2Activity extends ListActivity {
 		
 		String id = C2DMessaging.getRegistrationId(this);
 		//se ainda nao estiver registado, regista-se
-		if(id.equals(""))
+		if(id.equals("")){
+			System.out.println("Vai obter a chave pela 1ra vez");
 			C2DMessaging.register(this, api.c2dmAccount);
-		else
+			
+		//TODO: enviar coisas pro server
+		}else{
 			System.out.println("registration id ->" + id);
+			if(C2DMessaging.getLastRegistrationChange(this) > 0){
+				System.out.println("Vai obter a chave nova");
+				
+				//TODO: enciar coisas pro server;
+				//pesquizar por pela data do ultimo update
+				//verificar se algum foi modificado
+				//nao mostrar repetidos
+			}
+		}
 		
-		
-		/*
-		api.displayNotificationMessage(this);
-		api.displayNotificationMessage(this);
-		api.displayNotificationMessage(this);
-		api.displayNotificationMessage(this);
-		//displayNotificationMessage("hello world 2");
-		*/
-		
-		
-		
-		
+	
 		
     }
+    
+    
+    
+    @Override
+	protected void onResume() {
+    	super.onResume();
+    	
+    	mAdapter.setList(api.getFavourites());
+    	mAdapter.notifyDataSetChanged();
+	}
     
     
     @Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		
+						
 		Intent intent = new Intent(getApplicationContext(),ShowRealEstate.class);
+		intent.putExtra("mode", api.MODE_FAVOURITE);
+		intent.putIntegerArrayListExtra("ids_list", mAdapter.getListIds());
+		intent.putExtra("index", position);
         startActivity(intent);
 	}
 
@@ -88,6 +102,21 @@ public class CMOVPA2Activity extends ListActivity {
     	public MyListAdapter(){
     		list = new ArrayList<HouseInfo>();
     		
+    	}
+    	
+    	public void setList(ArrayList<HouseInfo> l){
+    		list = l;
+    	}
+    	
+    	
+    	public ArrayList<Integer> getListIds(){
+    		ArrayList<Integer> l = new ArrayList<Integer>();
+
+    		for(HouseInfo h:list)
+    			l.add(h.getId());
+
+    		
+    		return l;
     	}
     	
 		@Override
@@ -124,7 +153,7 @@ public class CMOVPA2Activity extends ListActivity {
 					((RelativeLayout)convertView.findViewById(R.id.list_child_layout)).setBackgroundResource(R.drawable.background_selling);
 				 
 				 
-				 if(house.getKind().equalsIgnoreCase("Flat"))
+				 if(house.getKind().equalsIgnoreCase("Apartment"))
 					 ((ImageView)convertView.findViewById(R.id.list_child_image)).setImageResource(R.drawable.flat_icon);
 				 else if(house.getKind().equalsIgnoreCase("House"))
 					 ((ImageView)convertView.findViewById(R.id.list_child_image)).setImageResource(R.drawable.house_icon);
@@ -139,24 +168,6 @@ public class CMOVPA2Activity extends ListActivity {
 			return convertView;
 		}
 	}
-    
-    
-    
-    private void stopService() {
-      	Log.w("C2DMReceiver", "Stopping service...");
-        if (stopService(new Intent(this, C2DMReceiver.class)))
-      	  Log.w("C2DMReceiver", "stopService was successful");
-        else
-         	Log.w("C2DMReceiver", "stopService was unsuccessful");
-      }
 
-      @Override
-      public void onDestroy() {
-      	stopService();
-        super.onDestroy();
-      }
-      
-      
-      
-      
+
 }

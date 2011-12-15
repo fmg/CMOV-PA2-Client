@@ -65,7 +65,7 @@ public class DatabaseAdapter {
 	}
 	
 	public void removeFavourite(int id){
-		String deleteFavourite = "delete from favourites where id="+id;  
+		String deleteFavourite = "delete from favourites where _id="+id;  
 
 	 	database.execSQL(deleteFavourite);
 	}
@@ -120,21 +120,21 @@ public class DatabaseAdapter {
 	 		 */
 	 		
 	 		boolean for_sale;
-	 		if(favouritesCursor.getInt(dbHelper.COLUMN_FOR_SALE) > 0)
+	 		if(favouritesCursor.getInt(dbHelper.COLUMN_FOR_SALE_NUMBER) > 0)
 	 			for_sale = true;
 	 		else
 	 			for_sale = false;
 	 		
-	 		HouseInfo house = new HouseInfo(favouritesCursor.getInt(dbHelper.COLUMN_ID), 
-	 				favouritesCursor.getString(dbHelper.COLUMN_KIND),
-	 				favouritesCursor.getString(dbHelper.COLUMN_ADDRESS),
-	 				favouritesCursor.getString(dbHelper.COLUMN_CITY),
-	 				favouritesCursor.getString(dbHelper.COLUMN_BEDROOMS),
-	 				favouritesCursor.getString(dbHelper.COLUMN_WCS),
-	 				favouritesCursor.getString(dbHelper.COLUMN_EXTRAS),
-	 				favouritesCursor.getString(dbHelper.COLUMN_PHOTO),
+	 		HouseInfo house = new HouseInfo(favouritesCursor.getInt(dbHelper.COLUMN_ID_NUMBER), 
+	 				favouritesCursor.getString(dbHelper.COLUMN_KIND_NUMBER),
+	 				favouritesCursor.getString(dbHelper.COLUMN_ADDRESS_NUMBER),
+	 				favouritesCursor.getString(dbHelper.COLUMN_CITY_NUMBER),
+	 				favouritesCursor.getString(dbHelper.COLUMN_BEDROOMS_NUMBER),
+	 				favouritesCursor.getString(dbHelper.COLUMN_WCS_NUMBER),
+	 				favouritesCursor.getString(dbHelper.COLUMN_EXTRAS_NUMBER),
+	 				favouritesCursor.getString(dbHelper.COLUMN_PHOTO_NUMBER),
 	 				for_sale,
-	 				favouritesCursor.getString(dbHelper.COLUMN_PRICE));
+	 				favouritesCursor.getString(dbHelper.COLUMN_PRICE_NUMBER));
 	 		
 	 		favourites.add(house);
 	 	}while(favouritesCursor.moveToNext());
@@ -143,6 +143,64 @@ public class DatabaseAdapter {
 	 	return favourites;
 	}
 	
+	
+	
+	public HouseInfo getFavourite(int id){
+		
+		
+		String selectFavourite = "Select * from favourites Where _id="+id;  
+		
+	 	Cursor favouriteCursor = database.rawQuery(selectFavourite, null);
+	 	
+	 	favouriteCursor.moveToFirst();
+		
+		boolean for_sale;
+ 		if(favouriteCursor.getInt(dbHelper.COLUMN_FOR_SALE_NUMBER) > 0)
+ 			for_sale = true;
+ 		else
+ 			for_sale = false;
+ 		
+ 		HouseInfo house = new HouseInfo(favouriteCursor.getInt(dbHelper.COLUMN_ID_NUMBER), 
+ 				favouriteCursor.getString(dbHelper.COLUMN_KIND_NUMBER),
+ 				favouriteCursor.getString(dbHelper.COLUMN_ADDRESS_NUMBER),
+ 				favouriteCursor.getString(dbHelper.COLUMN_CITY_NUMBER),
+ 				favouriteCursor.getString(dbHelper.COLUMN_BEDROOMS_NUMBER),
+ 				favouriteCursor.getString(dbHelper.COLUMN_WCS_NUMBER),
+ 				favouriteCursor.getString(dbHelper.COLUMN_EXTRAS_NUMBER),
+ 				favouriteCursor.getString(dbHelper.COLUMN_PHOTO_NUMBER),
+ 				for_sale,
+ 				favouriteCursor.getString(dbHelper.COLUMN_PRICE_NUMBER));
+		
+		favouriteCursor.close();
+ 		
+		return house;
+	}
+	
+	
+	
+	public long updateFavourite(HouseInfo house){
+		
+		
+		String strFilter = "_id=" + house.getId();
+		ContentValues args = new ContentValues();
+		args.put(dbHelper.COLUMN_KIND_NAME, house.getKind());
+		args.put(dbHelper.COLUMN_ADDRESS_NAME, house.getAddress());
+		args.put(dbHelper.COLUMN_CITY_NAME, house.getKind());
+		args.put(dbHelper.COLUMN_BEDROOMS_NAME, house.getKind());
+		args.put(dbHelper.COLUMN_WCS_NAME, house.getKind());
+		args.put(dbHelper.COLUMN_EXTRAS_NAME, house.getKind());
+		args.put(dbHelper.COLUMN_PHOTO_NAME, house.getKind());
+		args.put(dbHelper.COLUMN_PRICE_NAME, house.getKind());
+
+		if(house.isFor_sale())
+			args.put(dbHelper.COLUMN_FOR_SALE_NAME, 1);
+		else
+			args.put(dbHelper.COLUMN_FOR_SALE_NAME, 0);
+
+		return database.update("favourites", args, strFilter, null);
+ 		
+		
+	}
 	
 	
 /////////////////////////////////////////////////////////////////////

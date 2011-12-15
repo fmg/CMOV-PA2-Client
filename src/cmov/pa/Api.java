@@ -44,6 +44,9 @@ public class Api extends Application{
 	public static int count = 1;
 	
 	
+	public final String MODE_FAVOURITE = "favourites";
+	public final String MODE_NEW = "new";
+	public final String MODE_UPDATE = "update";
 	
 	
 	
@@ -57,7 +60,7 @@ public class Api extends Application{
 		HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 3000);
 		HttpResponse response=null;
 	   	
-		String url = IP + " /registration/create?name="+key;       
+		String url = IP + " /registrations/create?name="+key;       
 		System.out.println(url);
 		try {
 			HttpGet httpget = new HttpGet(url);		   
@@ -105,6 +108,7 @@ public class Api extends Application{
 				
 				InputStream instream = response.getEntity().getContent();
 	            String tmp = read(instream);
+	            System.out.println(tmp);
 				
 	            JSONObject messageReceived = new JSONObject(tmp);
 	            
@@ -157,7 +161,7 @@ public class Api extends Application{
 		if(response.getStatusLine().getStatusCode() == 200){
 			InputStream instream = response.getEntity().getContent();
             String tmp = read(instream);
-            
+            System.out.println(tmp);
         	
 	        JSONArray messageReceived = new JSONArray(tmp.toString());
         	System.out.println(messageReceived.toString());
@@ -276,6 +280,15 @@ public class Api extends Application{
 		dbAdapter.close();
 	}
 	
+	
+	public void updateFavourite(HouseInfo house){
+		dbAdapter.open();
+		
+		dbAdapter.updateFavourite(house);
+		
+		dbAdapter.close();
+	}
+	
 	public boolean hasFavourite(int id){
 		boolean ret;
 		
@@ -287,6 +300,28 @@ public class Api extends Application{
 		
 	}
 	
+	public HouseInfo getFavourite(int id){
+		dbAdapter.open();
+		
+		HouseInfo h= dbAdapter.getFavourite(id);
+		
+		dbAdapter.close();
+		
+		return h;
+	}
+	
+	
+	
+	public ArrayList<HouseInfo> getFavourites(){
+		
+		dbAdapter.open();
+		
+		ArrayList<HouseInfo> h = dbAdapter.getFavourites();
+		
+		dbAdapter.close();
+		
+		return h;
+	}
 	
 	public void updateVersion(){
 		dbAdapter.open();

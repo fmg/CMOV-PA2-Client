@@ -10,16 +10,37 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String DATABASE_NAME = "cmov.db";
 	private static final int DATABASE_VERSION = 1;
 	
-	public final int COLUMN_ID = 0;
-	public final int COLUMN_KIND = 1;
-	public final int COLUMN_ADDRESS = 2;
-	public final int COLUMN_CITY = 3;
-	public final int COLUMN_BEDROOMS = 4;
-	public final int COLUMN_WCS = 5;
-	public final int COLUMN_FOR_SALE = 6;
-	public final int COLUMN_EXTRAS = 7;
-	public final int COLUMN_PRICE = 8;
-	public final int COLUMN_PHOTO = 9;
+	public final int COLUMN_ID_NUMBER = 0;
+	public final String COLUMN_ID_NAME = "_id";
+	
+	public final int COLUMN_KIND_NUMBER = 1;
+	public final String COLUMN_KIND_NAME = "kind";
+	
+	public final int COLUMN_ADDRESS_NUMBER = 2;
+	public final String COLUMN_ADDRESS_NAME = "address";
+
+	public final int COLUMN_CITY_NUMBER = 3;
+	public final String COLUMN_CITY_NAME = "city";
+
+	
+	public final int COLUMN_BEDROOMS_NUMBER = 4;
+	public final String COLUMN_BEDROOMS_NAME = "bedrooms";
+
+	public final int COLUMN_WCS_NUMBER = 5;
+	public final String COLUMN_WCS_NAME = "wcs";
+
+	public final int COLUMN_FOR_SALE_NUMBER = 6;
+	public final String COLUMN_FOR_SALE_NAME = "for_sale";
+
+	public final int COLUMN_EXTRAS_NUMBER = 7;
+	public final String COLUMN_EXTRAS_NAME = "extras";
+
+	public final int COLUMN_PRICE_NUMBER = 8;
+	public final String COLUMN_PRICE_NAME = "price";
+
+	public final int COLUMN_PHOTO_NUMBER = 9;
+	public final String COLUMN_PHOTO_NAME = "photo";
+
 	
 	private static final String DATABASE_CREATE_FAVOURITES = " CREATE TABLE favourites (_id INTEGER PRIMARY KEY, " +
 			"kind TEXT,  " +

@@ -61,7 +61,7 @@ public class NotificationList extends Activity{
 				
 				Intent intent = new Intent(getApplicationContext(),ShowRealEstate.class);
 				intent.putExtra("index", arg2);
-				intent.putExtra("mode", "online");
+				intent.putExtra("mode", api.MODE_NEW);
 				intent.putIntegerArrayListExtra("ids_list", tmp);
 		        startActivity(intent);
 				
@@ -79,7 +79,7 @@ public class NotificationList extends Activity{
 				
 				Intent intent = new Intent(getApplicationContext(),ShowRealEstate.class);
 				intent.putExtra("index", arg2);
-				intent.putExtra("mode", "online");
+				intent.putExtra("mode", api.MODE_UPDATE);
 				intent.putIntegerArrayListExtra("ids_list", tmp);
 	
 		        startActivity(intent);
