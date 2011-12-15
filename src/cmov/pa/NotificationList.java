@@ -36,7 +36,7 @@ public class NotificationList extends Activity{
         
         newAdapter = new MyListAdapter(api.new_list, R.drawable.new_icon);
         
-        updateAdapter = new MyListAdapter(api.updated_list, R.drawable.new_icon);
+        updateAdapter = new MyListAdapter(api.updated_list, R.drawable.updated_icon);
         
         ((ListView)findViewById(R.id.listView1)).setAdapter(newAdapter);
         ((ListView)findViewById(R.id.listView2)).setAdapter(updateAdapter);

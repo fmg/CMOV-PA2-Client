@@ -185,12 +185,12 @@ public class DatabaseAdapter {
 		ContentValues args = new ContentValues();
 		args.put(dbHelper.COLUMN_KIND_NAME, house.getKind());
 		args.put(dbHelper.COLUMN_ADDRESS_NAME, house.getAddress());
-		args.put(dbHelper.COLUMN_CITY_NAME, house.getKind());
-		args.put(dbHelper.COLUMN_BEDROOMS_NAME, house.getKind());
-		args.put(dbHelper.COLUMN_WCS_NAME, house.getKind());
-		args.put(dbHelper.COLUMN_EXTRAS_NAME, house.getKind());
-		args.put(dbHelper.COLUMN_PHOTO_NAME, house.getKind());
-		args.put(dbHelper.COLUMN_PRICE_NAME, house.getKind());
+		args.put(dbHelper.COLUMN_CITY_NAME, house.getCity());
+		args.put(dbHelper.COLUMN_BEDROOMS_NAME, house.getBedrooms());
+		args.put(dbHelper.COLUMN_WCS_NAME, house.getWcs());
+		args.put(dbHelper.COLUMN_EXTRAS_NAME, house.getExtras());
+		args.put(dbHelper.COLUMN_PHOTO_NAME, house.getPhoto());
+		args.put(dbHelper.COLUMN_PRICE_NAME, house.getPrice());
 
 		if(house.isFor_sale())
 			args.put(dbHelper.COLUMN_FOR_SALE_NAME, 1);

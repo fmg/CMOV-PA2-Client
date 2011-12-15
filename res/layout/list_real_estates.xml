@@ -9,13 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Real Estate List"
-        android:textAppearance="?android:attr/textAppearanceMedium" android:gravity="center_horizontal"/>
+        android:textAppearance="?android:attr/textAppearanceMedium" android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textColor="#FFFFFFFF"
+        android:background="@drawable/background_labels"/>
 
 <ListView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/list"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp" >
 
 </ListView>
 

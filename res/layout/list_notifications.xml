@@ -28,7 +28,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="New" />
+            android:text="New"
+            android:textStyle="bold"
+            android:textColor="#FFFFFFFF"
+            android:background="@drawable/background_labels"
+            android:gravity="center_horizontal" />
 
         <ListView
             android:id="@+id/listView1"
@@ -54,7 +58,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Updated" />
+            android:text="Updated" 
+            android:textStyle="bold"
+            android:textColor="#FFFFFFFF"
+            android:background="@drawable/background_labels"
+            android:gravity="center_horizontal"/>
 
         <ListView
             android:id="@+id/listView2"

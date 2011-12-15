@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -121,8 +122,10 @@ public class ShowRealEstate  extends Activity implements Runnable{
         	
         	if(hinfo.isFor_sale()){
         		((TextView)findViewById(R.id.view_house_selling_state)).setText("For Sale");
+        		((ScrollView)findViewById(R.id.ScrollView1)).setBackgroundResource(R.drawable.background_selling);
         	}else{
         		((TextView)findViewById(R.id.view_house_selling_state)).setText("Sold");
+        		((ScrollView)findViewById(R.id.ScrollView1)).setBackgroundResource(R.drawable.background_sold);
         	}
         	
         	((TextView)findViewById(R.id.view_house_address)).setText(hinfo.getAddress());

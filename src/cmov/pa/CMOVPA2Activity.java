@@ -155,7 +155,7 @@ public class CMOVPA2Activity extends ListActivity {
 				 
 				 if(house.getKind().equalsIgnoreCase("Apartment"))
 					 ((ImageView)convertView.findViewById(R.id.list_child_image)).setImageResource(R.drawable.flat_icon);
-				 else if(house.getKind().equalsIgnoreCase("House"))
+				 else if(house.getKind().equalsIgnoreCase("Home"))
 					 ((ImageView)convertView.findViewById(R.id.list_child_image)).setImageResource(R.drawable.house_icon);
 				 else
 					 ((ImageView)convertView.findViewById(R.id.list_child_image)).setImageResource(R.drawable.castle_icon);

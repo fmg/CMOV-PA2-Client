@@ -236,12 +236,17 @@ public class Api extends Application{
 		
 		String message = "";
 		if(new_list.size() > 0){
-			message+= new_list.size()+ " New Real Estates.";
+			message+= new_list.size()+ " New ";
 			
+			if (updated_list.size() == 0) 
+				message+= " Real Estates";
 		}
 		
 		if(updated_list.size() > 0){
-			message+= updated_list.size()+ " Updates To Your Real Estates.";
+			if(new_list.size() > 0)
+				message+= "and " + updated_list.size()+ " Updated Real Estates";
+			else
+				message+= updated_list.size()+ " Updated Real Estates";
 		}
 		
   	    Notification notification = new Notification(R.drawable.notification_icon, message, System.currentTimeMillis());
