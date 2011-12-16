@@ -99,13 +99,10 @@ public class ShowRealEstate  extends Activity implements Runnable{
 	  		handler.sendMessage(handler.obtainMessage());
   		
   		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -147,10 +144,8 @@ public class ShowRealEstate  extends Activity implements Runnable{
 				((ImageView)findViewById(R.id.view_house_image)).setImageBitmap(mIcon_val);
 			
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

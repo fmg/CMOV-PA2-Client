@@ -50,17 +50,12 @@ public class CMOVPA2Activity extends ListActivity {
 		if(id.equals("")){
 			System.out.println("Vai obter a chave pela 1ra vez");
 			C2DMessaging.register(this, api.c2dmAccount);
-			
-		//TODO: enviar coisas pro server
+				
 		}else{
 			System.out.println("registration id ->" + id);
 			if(C2DMessaging.getLastRegistrationChange(this) > 0){
 				System.out.println("Vai obter a chave nova");
-				
-				//TODO: enciar coisas pro server;
-				//pesquizar por pela data do ultimo update
-				//verificar se algum foi modificado
-				//nao mostrar repetidos
+				C2DMessaging.register(this, api.c2dmAccount);
 			}
 		}
 		

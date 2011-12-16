@@ -14,10 +14,19 @@
 
 package cmov.pa;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
+
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import cmov.pa.utils.HouseInfo;
+
 import com.google.android.c2dm.C2DMBaseReceiver;
+import com.google.android.c2dm.C2DMessaging;
 
 public class C2DMReceiver extends C2DMBaseReceiver {
 	
@@ -34,6 +43,35 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 	@Override
 	public void onRegistered(Context context, String registrationId) {
 		Log.w("C2DMReceiver-onRegistered", registrationId);
+		
+		
+		//TODO:enviar key pro server
+		api.registerKey(C2DMessaging.getRegistrationId(this));
+		ArrayList<HouseInfo> houses;
+		try {
+			if(api.getLastUpdateDate().equalsIgnoreCase("")){//primeira vez;
+					houses = api.updateList(null);
+				
+				
+			}else{
+					houses = api.updateList(api.getLastUpdateDate());
+					
+					//verificar se algum foi modificado
+					//nao mostrar repetidos
+
+			}
+			
+			//TODO: criar intent e lancar intent
+
+			
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
 	}
   
 	@Override
