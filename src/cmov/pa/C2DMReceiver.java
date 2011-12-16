@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -27,6 +28,7 @@ import cmov.pa.utils.HouseInfo;
 
 import com.google.android.c2dm.C2DMBaseReceiver;
 import com.google.android.c2dm.C2DMessaging;
+
 
 public class C2DMReceiver extends C2DMBaseReceiver {
 	
@@ -43,27 +45,30 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 	@Override
 	public void onRegistered(Context context, String registrationId) {
 		Log.w("C2DMReceiver-onRegistered", registrationId);
-		
-		
-		//TODO:enviar key pro server
-		api.registerKey(C2DMessaging.getRegistrationId(this));
-		ArrayList<HouseInfo> houses;
+				
 		try {
-			if(api.getLastUpdateDate().equalsIgnoreCase("")){//primeira vez;
-					houses = api.updateList(null);
+			if(api.registerKey(registrationId) == 0){;
+				ArrayList<HouseInfo> houses;
 				
+				if(api.getLastUpdateDate().equalsIgnoreCase("")){//primeira vez;
+						
+						api.updateList(null);
+						
+						Intent i = new Intent(context, AvailableList.class);  
+				        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
+				        api.mcontext.startActivity(i); 
+				}else{
+						api.updateList(api.getLastUpdateDate());
+						
+						
+						Intent i = new Intent(context, AvailableList.class);  
+				        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
+				        api.mcontext.startActivity(i); 
+						
+				}
 				
-			}else{
-					houses = api.updateList(api.getLastUpdateDate());
-					
-					//verificar se algum foi modificado
-					//nao mostrar repetidos
 
 			}
-			
-			//TODO: criar intent e lancar intent
-
-			
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

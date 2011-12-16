@@ -37,50 +37,50 @@ public class Api extends Application{
 	
 	
 	public static NotificationManager mNotificationManager;
+	public static Context mcontext;
 	
 	
-	public static ArrayList<HouseInfo> new_list = new ArrayList<HouseInfo>(); ;
-	public static ArrayList<HouseInfo> updated_list = new ArrayList<HouseInfo>();
+	public static ArrayList<HouseInfo> notifications_new_list = new ArrayList<HouseInfo>(); ;
+	public static ArrayList<HouseInfo> notifications_updated_list = new ArrayList<HouseInfo>();	
+	
+	public static ArrayList<HouseInfo> available_new_list = new ArrayList<HouseInfo>(); ;
+	public static ArrayList<HouseInfo> available_updated_list = new ArrayList<HouseInfo>();
+	
 	public static int count = 1;
 	
 	
 	public final String MODE_FAVOURITE = "favourites";
-	public final String MODE_NEW = "new";
-	public final String MODE_UPDATE = "update";
-	
+	public final String MODE_NOTIFICATION_NEW = "notification_new";
+	public final String MODE_NOTIFICATION_UPDATE = "notification_update";
+	public final String MODE_AVAILABLE_NEW= "available_new";
+	public final String MODE_AVAILABLE_UPDATE= "available_update";
+
 	
 	
 	///////////////////////////////////////////////////////////////////////
 	//						CHAMADAS AO VERVIDOR						//
 	///////////////////////////////////////////////////////////////////////
 	
-	public int registerKey(String key){
+	public int registerKey(String key) throws ClientProtocolException, IOException{
 		
 		final HttpClient httpClient =  new DefaultHttpClient();
 		HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 3000);
 		HttpResponse response=null;
 	   	
-		String url = IP + " /registrations/create?name="+key;       
+		String url = IP + "/registrations/create?name="+key;       
 		System.out.println(url);
-		try {
-			HttpGet httpget = new HttpGet(url);		   
-			httpget.setHeader("Accept", "application/json");
-	   
-			response = httpClient.execute(httpget);
-   
-			if(response.getStatusLine().getStatusCode() == 200){
-				return 0;
-			}else{
-				return -1;
-			}
+		
+		HttpGet httpget = new HttpGet(url);		   
+		httpget.setHeader("Accept", "application/json");
 		   
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			return 1;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return 1;
+		response = httpClient.execute(httpget);
+   
+		if(response.getStatusLine().getStatusCode() == 200){
+			return 0;
+		}else{
+			return -1;
 		}
+		   
            
        
 	}
@@ -136,19 +136,17 @@ public class Api extends Application{
 	}
 
 	
-	public ArrayList<HouseInfo> updateList(String date) throws ClientProtocolException, IOException, JSONException{
+	public void updateList(String date) throws ClientProtocolException, IOException, JSONException{
 		
 		final HttpClient httpClient =  new DefaultHttpClient();
 		HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 3000);
 		HttpResponse response=null;
 		String url;
-		
-		ArrayList<HouseInfo> houses = new ArrayList<HouseInfo>();
-		
+				
 		if(date == null)
-			url = IP + " /properties/update";
+			url = IP + "/properties/get_update";
 		else
-			url = IP + " /properties/update?date="+date;
+			url = IP + "/properties/get_update?date="+date;
 		
 		System.out.println(url);
 		
@@ -158,38 +156,45 @@ public class Api extends Application{
 	   
 		response = httpClient.execute(httpget);
    
+		System.out.println(response.getStatusLine().getStatusCode());
 		if(response.getStatusLine().getStatusCode() == 200){
 			InputStream instream = response.getEntity().getContent();
             String tmp = read(instream);
-            System.out.println(tmp);
         	
 	        JSONArray messageReceived = new JSONArray(tmp.toString());
         	System.out.println(messageReceived.toString());
         	
-        	for(int i = 0; i < messageReceived.length(); i++){
+        	for(int i = 0; i < messageReceived.length()-1; i++){
         		JSONObject jo = messageReceived.getJSONObject(i);
         		
-        		String photo = "/system/photos/"+jo.getInt("id")+"/original/"+jo.getString("photo");
+        		 String photo = IP+"/system/photos/"+jo.getInt("id")
+         				+"/original/"+jo.getString("photo_file_name");
    		
         		HouseInfo h = new HouseInfo(jo.getInt("id"), 
         				jo.getString("kind"), 
         				jo.getString("address"), 
         				jo.getString("city"), 
         				jo.getString("rooms"), 
-        				jo.getString("wcs"),
+        				jo.getString("bathrooms"),
         				jo.getString("extras"),
         				photo,
         				jo.getBoolean("for_sale"),
         				jo.getString("price")); 
         		
-        		houses.add(h);
+        		if(hasFavourite(h.getId())){
+        			updateFavourite(h);
+        			available_updated_list.add(h);
+        		}else{
+        			available_new_list.add(h);
+        		}
         		
         	}
         	
-        	return houses;
+        	
+        	updateVersion(messageReceived.getString(messageReceived.length()-1));
+        	
 		}
 
-		return houses;
 
 	}
 	
@@ -215,13 +220,13 @@ public class Api extends Application{
 		if(operation.equals("update")){
 			if(hasFavourite(id)){
 				HouseInfo h = new HouseInfo(id,kind,city);
-				updated_list.add(h);
+				notifications_updated_list.add(h);
 				return true;
 			}else
 				return false;
 		}else if(operation.equals("new")){
 			HouseInfo h = new HouseInfo(id,kind,city);
-			new_list.add(h);
+			notifications_new_list.add(h);
 			return true;
 		}
 		
@@ -232,21 +237,21 @@ public class Api extends Application{
 	
 	public void displayNotificationMessage(Context context) {
 		
-		updateVersion();
+		//updateVersion();
 		
 		String message = "";
-		if(new_list.size() > 0){
-			message+= new_list.size()+ " New ";
+		if(notifications_new_list.size() > 0){
+			message+= notifications_new_list.size()+ " New ";
 			
-			if (updated_list.size() == 0) 
+			if (notifications_updated_list.size() == 0) 
 				message+= " Real Estates";
 		}
 		
-		if(updated_list.size() > 0){
-			if(new_list.size() > 0)
-				message+= "and " + updated_list.size()+ " Updated Real Estates";
+		if(notifications_updated_list.size() > 0){
+			if(notifications_new_list.size() > 0)
+				message+= "and " + notifications_updated_list.size()+ " Updated Real Estates";
 			else
-				message+= updated_list.size()+ " Updated Real Estates";
+				message+= notifications_updated_list.size()+ " Updated Real Estates";
 		}
 		
   	    Notification notification = new Notification(R.drawable.notification_icon, message, System.currentTimeMillis());
@@ -328,9 +333,9 @@ public class Api extends Application{
 		return h;
 	}
 	
-	public void updateVersion(){
+	public void updateVersion(String date){
 		dbAdapter.open();
-		dbAdapter.updateVersion();
+		dbAdapter.updateVersion(date);
 		dbAdapter.close();
 	}
 	

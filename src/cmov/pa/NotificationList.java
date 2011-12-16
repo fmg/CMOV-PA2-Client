@@ -34,9 +34,9 @@ public class NotificationList extends Activity{
         api.count=1;
         
         
-        newAdapter = new MyListAdapter(api.new_list, R.drawable.new_icon);
+        newAdapter = new MyListAdapter(api.notifications_new_list, R.drawable.new_icon);
         
-        updateAdapter = new MyListAdapter(api.updated_list, R.drawable.updated_icon);
+        updateAdapter = new MyListAdapter(api.notifications_updated_list, R.drawable.updated_icon);
         
         ((ListView)findViewById(R.id.listView1)).setAdapter(newAdapter);
         ((ListView)findViewById(R.id.listView2)).setAdapter(updateAdapter);
@@ -61,7 +61,7 @@ public class NotificationList extends Activity{
 				
 				Intent intent = new Intent(getApplicationContext(),ShowRealEstate.class);
 				intent.putExtra("index", arg2);
-				intent.putExtra("mode", api.MODE_NEW);
+				intent.putExtra("mode", api.MODE_NOTIFICATION_NEW);
 				intent.putIntegerArrayListExtra("ids_list", tmp);
 		        startActivity(intent);
 				
@@ -79,7 +79,7 @@ public class NotificationList extends Activity{
 				
 				Intent intent = new Intent(getApplicationContext(),ShowRealEstate.class);
 				intent.putExtra("index", arg2);
-				intent.putExtra("mode", api.MODE_UPDATE);
+				intent.putExtra("mode", api.MODE_NOTIFICATION_UPDATE);
 				intent.putIntegerArrayListExtra("ids_list", tmp);
 	
 		        startActivity(intent);
@@ -91,8 +91,8 @@ public class NotificationList extends Activity{
     
     @Override
 	public void onBackPressed() {
-		api.new_list = new ArrayList<HouseInfo>();
-		api.updated_list = new ArrayList<HouseInfo>();
+		api.notifications_new_list = new ArrayList<HouseInfo>();
+		api.notifications_updated_list = new ArrayList<HouseInfo>();
 		
 		super.onBackPressed();
 	}

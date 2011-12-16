@@ -13,7 +13,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,27 +39,22 @@ public class CMOVPA2Activity extends ListActivity {
         
         
         api.mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        api.mcontext = this;
         
         mAdapter = new MyListAdapter();
 		setListAdapter(mAdapter);
 		
+		//C2DMessaging.unregister(this);
+		
 		
 		String id = C2DMessaging.getRegistrationId(this);
 		//se ainda nao estiver registado, regista-se
-		if(id.equals("")){
+		System.out.println(id);
+		if(id.equalsIgnoreCase("")){
 			System.out.println("Vai obter a chave pela 1ra vez");
 			C2DMessaging.register(this, api.c2dmAccount);
 				
-		}else{
-			System.out.println("registration id ->" + id);
-			if(C2DMessaging.getLastRegistrationChange(this) > 0){
-				System.out.println("Vai obter a chave nova");
-				C2DMessaging.register(this, api.c2dmAccount);
-			}
 		}
-		
-	
-		
     }
     
     
@@ -137,7 +131,7 @@ public class CMOVPA2Activity extends ListActivity {
         		 
         		 HouseInfo house = list.get(position);
         		 
-        		 System.out.println(house.getAddress());
+        		 //System.out.println(house.getAddress());
         		 
         		 ((TextView) convertView.findViewById(R.id.list_child_address)).setText(house.getAddress());
 				 

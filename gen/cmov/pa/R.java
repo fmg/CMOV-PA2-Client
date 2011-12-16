@@ -31,18 +31,18 @@ public final class R {
     public static final class id {
         public static final int RelativeLayout1=0x7f06000d;
         public static final int ScrollView1=0x7f06000c;
-        public static final int listView1=0x7f060008;
-        public static final int listView2=0x7f06000b;
-        public static final int list_child_address=0x7f060004;
-        public static final int list_child_bedrooms=0x7f060002;
-        public static final int list_child_city=0x7f060003;
-        public static final int list_child_image=0x7f060001;
-        public static final int list_child_layout=0x7f060000;
-        public static final int list_notification_new_container=0x7f060006;
-        public static final int list_notification_updated_container=0x7f060009;
-        public static final int textView1=0x7f060005;
-        public static final int textView2=0x7f060007;
-        public static final int textView3=0x7f06000a;
+        public static final int listView1=0x7f060003;
+        public static final int listView2=0x7f060006;
+        public static final int list_child_address=0x7f06000b;
+        public static final int list_child_bedrooms=0x7f060009;
+        public static final int list_child_city=0x7f06000a;
+        public static final int list_child_image=0x7f060008;
+        public static final int list_child_layout=0x7f060007;
+        public static final int list_notification_new_container=0x7f060001;
+        public static final int list_notification_updated_container=0x7f060004;
+        public static final int textView1=0x7f060000;
+        public static final int textView2=0x7f060002;
+        public static final int textView3=0x7f060005;
         public static final int view_house_address=0x7f060011;
         public static final int view_house_bedrooms=0x7f060013;
         public static final int view_house_city=0x7f060012;
@@ -55,10 +55,11 @@ public final class R {
         public static final int view_house_wc=0x7f060014;
     }
     public static final class layout {
-        public static final int list_child=0x7f030000;
-        public static final int list_notifications=0x7f030001;
-        public static final int list_real_estates=0x7f030002;
-        public static final int view_real_estate=0x7f030003;
+        public static final int list_changed=0x7f030000;
+        public static final int list_child=0x7f030001;
+        public static final int list_notifications=0x7f030002;
+        public static final int list_real_estates=0x7f030003;
+        public static final int view_real_estate=0x7f030004;
     }
     public static final class string {
         public static final int app_name=0x7f050000;

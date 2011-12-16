@@ -42,6 +42,7 @@
 		      </intent-filter>
     	</receiver>
        	<activity android:name="NotificationList" android:theme="@android:style/Theme.NoTitleBar"></activity>
+       	<activity android:name="AvailableList" android:theme="@android:style/Theme.NoTitleBar"></activity>
     </application>
 
 </manifest>

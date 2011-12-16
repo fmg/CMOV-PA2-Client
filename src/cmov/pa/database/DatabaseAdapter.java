@@ -228,19 +228,12 @@ public class DatabaseAdapter {
 	}
 	
 	
-	public long updateVersion(){
+	public long updateVersion(String date){
 
 		//elimina data antiga
 		String resetVersion = "delete from version";  
 	 	database.execSQL(resetVersion);
-		
-	 	
-	 	
-	 	//insere nova
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		Calendar cal = Calendar.getInstance();
-		String date = dateFormat.format(cal.getTime());
-		
+
 	
 		ContentValues initialvalues = new ContentValues();
 		initialvalues.put("date", date);
