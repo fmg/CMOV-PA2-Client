@@ -141,6 +141,8 @@ public class NotificationList extends Activity{
         		 
         		 HouseInfo house = list.get(position);
         		 
+        		 if(house.isFor_removal())
+        			 ((RelativeLayout)convertView.findViewById(R.id.list_child_layout)).setBackgroundResource(R.drawable.background_sold);
         		 
 				((ImageView)convertView.findViewById(R.id.list_child_image)).setImageResource(image_id);
 	

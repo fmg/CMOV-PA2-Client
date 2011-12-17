@@ -217,9 +217,13 @@ public class Api extends Application{
 	
 	
 	public boolean updateNotificationPendingLists(String operation, int id, String kind, String city){
-		if(operation.equals("update")){
+		if(operation.equals("update") || operation.equals("destroy")){
 			if(hasFavourite(id)){
 				HouseInfo h = new HouseInfo(id,kind,city);
+				if(operation.equals("destroy")){
+					System.out.println("vai destruir-> " + id);
+					h.setFor_removal(true);
+				}
 				notifications_updated_list.add(h);
 				return true;
 			}else

@@ -2,6 +2,7 @@ package cmov.pa.utils;
 
 public class HouseInfo {
 
+
 	int id;
 	String address;
 	String bedrooms;
@@ -12,6 +13,9 @@ public class HouseInfo {
 	String wcs;
 	String price;
 	String extras;
+	
+	
+	boolean for_removal = false;
 	
 	
 	public HouseInfo(){}
@@ -115,5 +119,14 @@ public class HouseInfo {
 
 	public void setExtras(String extras) {
 		this.extras = extras;
+	}
+	
+	
+	public boolean isFor_removal() {
+		return for_removal;
+	}
+
+	public void setFor_removal(boolean for_removal) {
+		this.for_removal = for_removal;
 	}
 }

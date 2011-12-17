@@ -82,18 +82,28 @@ public class ShowRealEstate  extends Activity implements Runnable{
 	public void run() {
   		try {
   		
-	  		if(mode.equalsIgnoreCase(api.MODE_NOTIFICATION_NEW) || mode.equalsIgnoreCase(api.MODE_NOTIFICATION_UPDATE)){
+	  		if(mode.equalsIgnoreCase(api.MODE_NOTIFICATION_NEW) || 
+	  				mode.equalsIgnoreCase(api.MODE_NOTIFICATION_UPDATE) || 
+	  				mode.equalsIgnoreCase(api.MODE_AVAILABLE_UPDATE)){
 	  			
-	  			hinfo =	api.getHouseInfo(ids_list.get(index));
 	  			
-	  			
-	  			if(mode.equalsIgnoreCase(api.MODE_NOTIFICATION_UPDATE)){
-	  				api.updateFavourite(hinfo);
+	  			if(mode.equalsIgnoreCase(api.MODE_NOTIFICATION_NEW) || mode.equalsIgnoreCase(api.MODE_AVAILABLE_UPDATE)){
+	  				hinfo =	api.getHouseInfo(ids_list.get(index));
+	  			}else if(mode.equalsIgnoreCase(api.MODE_NOTIFICATION_UPDATE)){//caso especial pk pode ser removido
+	  				
+	  				if(api.notifications_updated_list.get(index).isFor_removal()){
+	  					hinfo = api.getFavourite(ids_list.get(index));
+	  					hinfo.setFor_removal(true);
+	  					hinfo.setFor_sale(false);
+	  				}else{
+	  				
+	  					hinfo =	api.getHouseInfo(ids_list.get(index));
+	  					api.updateFavourite(hinfo);
+	  				}
 	  			}
-	  			
+
 				
-				
-	  		}else if(mode.equalsIgnoreCase(api.MODE_FAVOURITE) || mode.equalsIgnoreCase(api.MODE_AVAILABLE_UPDATE)){
+	  		}else if(mode.equalsIgnoreCase(api.MODE_FAVOURITE)){
 	  			hinfo = api.getFavourite(ids_list.get(index));
 	  		}else if(mode.equalsIgnoreCase(api.MODE_AVAILABLE_NEW)){
 	  			hinfo = api.available_new_list.get(index);
@@ -103,10 +113,16 @@ public class ShowRealEstate  extends Activity implements Runnable{
   		
   		} catch (ClientProtocolException e) {
 			e.printStackTrace();
+			dialog.dismiss();
+			finish();
 		} catch (IOException e) {
 			e.printStackTrace();
+			dialog.dismiss();
+			finish();
 		} catch (JSONException e) {
 			e.printStackTrace();
+			dialog.dismiss();
+			finish();
 		}
 		
 	}
@@ -136,7 +152,17 @@ public class ShowRealEstate  extends Activity implements Runnable{
         	
         	if(mode.equalsIgnoreCase(api.MODE_FAVOURITE)  || mode.equalsIgnoreCase(api.MODE_NOTIFICATION_UPDATE) || mode.equalsIgnoreCase(api.MODE_AVAILABLE_UPDATE)){
         		((RatingBar)findViewById(R.id.view_house_favourite)).setRating(1);
+        		
+        		
+        		if(hinfo.isFor_removal()){
+            		((RatingBar)findViewById(R.id.view_house_favourite)).setVisibility(View.GONE);
+            		api.deleteFavourite(hinfo.getId());
+            		
+            	}
+        		
         	}
+        	
+        	
         	
         	
         	URL newurl;

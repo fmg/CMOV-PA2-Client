@@ -1,7 +1,11 @@
 package cmov.pa;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
 
 import com.google.android.c2dm.C2DMessaging;
 
@@ -10,10 +14,16 @@ import cmov.pa.utils.HouseInfo;
 
 import android.app.ListActivity;
 import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -22,16 +32,18 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class CMOVPA2Activity extends ListActivity {
+public class CMOVPA2Activity extends ListActivity implements Runnable {
 
 	MyListAdapter mAdapter;
 	Api api;
+	ProgressDialog dialog;
+	int operation;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_real_estates);
+        setContentView(R.layout.list_my_real_estates);
         
         api = new Api();
         
@@ -58,6 +70,37 @@ public class CMOVPA2Activity extends ListActivity {
     }
     
     
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+    
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+    	Thread thread;
+        switch (item.getItemId()) {
+        case R.id.viewAll:
+        	dialog = ProgressDialog.show(CMOVPA2Activity.this, "", "Loading. Please wait...", true);
+        	operation = 1;
+    		thread = new Thread(this);
+            thread.start();
+            return true;
+        case R.id.viewModified:
+        	dialog = ProgressDialog.show(CMOVPA2Activity.this, "", "Loading. Please wait...", true);
+        	operation = 2;
+    		thread = new Thread(this);
+            thread.start();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+    
+    
     
     @Override
 	protected void onResume() {
@@ -80,8 +123,35 @@ public class CMOVPA2Activity extends ListActivity {
 	}
 
 
-    
-    
+    @Override
+	public void run() {
+		
+    	try {
+    		if(operation == 1)
+    			api.updateList(null);
+    		else
+    			api.updateList(api.getLastUpdateDate());
+    		
+    		
+			handler.sendMessage(handler.obtainMessage());
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+  	final Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+        	dialog.dismiss();
+        	
+        	Intent intent = new Intent(getApplicationContext(),AvailableList.class);
+        	startActivity(intent);
+        }
+  	};
     
     public class MyListAdapter extends BaseAdapter {
 
@@ -157,6 +227,5 @@ public class CMOVPA2Activity extends ListActivity {
 			return convertView;
 		}
 	}
-
 
 }
