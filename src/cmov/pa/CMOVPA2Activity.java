@@ -65,7 +65,6 @@ public class CMOVPA2Activity extends ListActivity implements Runnable {
 		if(id.equalsIgnoreCase("")){
 			System.out.println("Vai obter a chave pela 1ra vez");
 			C2DMessaging.register(this, api.c2dmAccount);
-				
 		}
     }
     

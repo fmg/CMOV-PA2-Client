@@ -96,6 +96,16 @@ public class AvailableList extends Activity{
 		
         
     }
+	 
+	 
+	 
+	 @Override
+		public void onBackPressed() {
+			api.available_new_list = new ArrayList<HouseInfo>();
+			api.available_updated_list = new ArrayList<HouseInfo>();
+			
+			super.onBackPressed();
+		}
 	
 	
 	

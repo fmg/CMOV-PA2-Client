@@ -181,7 +181,7 @@ public class Api extends Application{
         				jo.getBoolean("for_sale"),
         				jo.getString("price")); 
         		
-        		if(hasFavourite(h.getId())){
+        		if(hasFavourite(h.getId()) && date != null){
         			updateFavourite(h);
         			available_updated_list.add(h);
         		}else{
