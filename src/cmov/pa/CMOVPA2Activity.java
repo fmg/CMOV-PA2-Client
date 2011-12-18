@@ -135,10 +135,13 @@ public class CMOVPA2Activity extends ListActivity implements Runnable {
     		
 			handler.sendMessage(handler.obtainMessage());
 		} catch (ClientProtocolException e) {
+			dialog.dismiss();
 			e.printStackTrace();
 		} catch (IOException e) {
+			dialog.dismiss();
 			e.printStackTrace();
 		} catch (JSONException e) {
+			dialog.dismiss();
 			e.printStackTrace();
 		}
 	}
